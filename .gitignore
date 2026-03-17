@@ -1,0 +1,96 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# PyCharm
+.idea/
+*.swp
+*.swo
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data and model files
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.h5
+*.pt
+*.pth
+*.bin
+
+# C++ build artifacts
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+build3/
+build/
+dist/
+*.cmake
+
+# Compiled binaries
+*.exe
+*.out
+*.app
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
