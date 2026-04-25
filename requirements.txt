@@ -1,0 +1,23 @@
+# Core deep learning (GPU - CUDA 12.1)
+
+torch==2.2.2+cu121
+torchvision==0.17.2+cu121
+torchaudio==2.2.2+cu121
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# Common ML / DL libraries
+
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.8.4
+scikit-learn==1.4.2
+
+# Utilities
+
+tqdm==4.66.4
+Pillow==10.3.0
+
+# Local app / API
+
+fastapi==0.115.0
+uvicorn==0.30.6
