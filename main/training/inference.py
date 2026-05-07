@@ -128,6 +128,9 @@ def load_runtime(
         "tokenizer": tokenizer,
         "config": config,
         "device": device,
+        "checkpoint_path": str(checkpoint_path),
+        "config_path": str(config_path),
+        "tokenizer_path": str(tokenizer_path),
     }
 
 

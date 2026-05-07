@@ -4,7 +4,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from main.inference import generate_completion, load_runtime
+from main.project_paths import FINETUNE_BEST_MODEL_FILE, TRAINING_CONFIG_FILE
+from main.training.inference import generate_completion, load_runtime
 from main.project_paths import FRONTEND_DIR
 
 
@@ -26,6 +27,29 @@ def get_runtime():
 @app.get("/api/health")
 def health_check():
     return {"status": "ok"}
+
+
+@app.get("/api/model-info")
+def model_info():
+    active_checkpoint = FINETUNE_BEST_MODEL_FILE if FINETUNE_BEST_MODEL_FILE.exists() else None
+    quality_snapshot = None
+
+    if active_checkpoint is not None:
+        quality_snapshot = {
+            "metric_type": "validation_perplexity",
+            "value": 7.07,
+            "notes": (
+                "This is the latest recorded fine-tuning validation perplexity. "
+                "For this project, it is a better quality signal than a single accuracy number."
+            ),
+        }
+
+    return {
+        "using_finetuned_model": active_checkpoint is not None,
+        "checkpoint_path": str(active_checkpoint) if active_checkpoint else None,
+        "config_path": str(TRAINING_CONFIG_FILE),
+        "quality_snapshot": quality_snapshot,
+    }
 
 
 @app.post("/api/generate")

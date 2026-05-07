@@ -8,13 +8,13 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 
-from main.inference import generate_completion, load_tokenizer
 from main.project_paths import (
     ARTIFACTS_DIR,
     BEST_MODEL_FILE,
     TOKENIZER_DIR,
     TRAINING_CONFIG_FILE,
 )
+from main.training.inference import generate_completion, load_tokenizer
 from main.transformer.decoder_only import build_transformer
 
 

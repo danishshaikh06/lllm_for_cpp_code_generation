@@ -487,13 +487,20 @@ The project also contains an app layer for later deployment.
 
 ### Backend
 
-- [app.py](C:/Users/Omen/Downloads/llm_for_cpp/main/app.py)
+- [app.py](C:/Users/Omen/Downloads/llm_for_cpp/main/backend/app.py)
 
 This provides:
 
 - a simple FastAPI application
 - `/api/health`
 - `/api/generate`
+- `/api/model-info`
+
+The backend now prefers the best fine-tuned checkpoint if it exists:
+
+- [finetune_best_model.pt](C:/Users/Omen/Downloads/llm_for_cpp/artifacts/finetune/finetune_best_model.pt)
+
+and falls back to the base checkpoint if a fine-tuned checkpoint is not available.
 
 ### Frontend
 
@@ -520,6 +527,41 @@ The purpose is to support later containerization of:
 - frontend
 - model loading
 
+## Step 11.5 - How To Run The Backend And Frontend
+
+From the project root:
+
+```powershell
+uvicorn main.backend.app:app --reload
+```
+
+Then open:
+
+- [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+What this starts:
+
+1. FastAPI backend for model inference
+2. static frontend served from `main/frontend`
+3. local prompt-to-response generation in the browser
+
+The main API routes are:
+
+- `GET /api/health`
+- `GET /api/model-info`
+- `POST /api/generate`
+
+### Expected Local Flow
+
+1. Start the backend with `uvicorn`
+2. Open the browser page at `127.0.0.1:8000`
+3. Type a C++ prompt such as:
+   - `write code for hello world`
+   - `write a C++ function to check if a number is prime`
+4. The frontend sends the prompt to `/api/generate`
+5. The backend loads the tokenizer, model config, and best checkpoint
+6. The model generates a response and returns it to the UI
+
 ## Step 12 - Planned Product Goal From the Roadmap
 
 The long-term product goal is not only to train a model, but to build a **simple usable website** on top of it.
@@ -541,6 +583,84 @@ This goal comes directly from the project roadmap in [codex.md](C:/Users/Omen/Do
 ## Step 13 - Planned Phase-Based Product Roadmap
 
 The project roadmap was designed in phases so the system can be built carefully rather than all at once.
+
+## Current Model Results
+
+The project has reached a working prototype stage.
+
+### Base Training Result
+
+After the base 10-epoch run, the model showed:
+
+- Train Loss: `1.2452`
+- Val Loss: `3.0875`
+- Perplexity: `21.92`
+
+This showed that the decoder-only Transformer learned C++ syntax patterns, but it was still weak at following direct user instructions.
+
+### Fine-Tuning Result
+
+After instruction-style fine-tuning on the filtered Hugging Face C++ dataset mixture, the latest recorded fine-tuning result showed:
+
+- Train Loss: `1.8772`
+- Val Loss: `1.9557`
+- Perplexity: `7.07`
+
+This indicates that fine-tuning improved prompt-following behavior compared with the base model, even though the model is still only prototype quality.
+
+### Example Prototype Result
+
+Example browser test:
+
+Prompt:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+cout<
+```
+
+Model output:
+
+```cpp
+int main(){
+    string s = "Hello World!";
+    cout<<"Hello World!";
+    cout<<"Hello World!";
+    return 0;
+}
+```
+
+This result shows:
+
+- the app is able to serve the model in the frontend
+- the model understands basic C++ code structure
+- the model can produce a plausible completion
+- but it is still weak at exact code completion and may repeat or improvise
+
+### Accuracy And Evaluation Note
+
+This project does **not** currently have a single reliable “accuracy” percentage in the way a classifier would.
+
+For a generation model like this, the current useful quality signals are:
+
+- validation loss
+- perplexity
+- sample prompt outputs
+- later, task-based evaluation such as compile success and instruction-following checks
+
+So the best reported quantitative metric right now is:
+
+- latest fine-tuning perplexity: `7.07`
+
+and the most honest practical evaluation is:
+
+- the frontend works
+- the model generates C++-like responses
+- instruction following improved after fine-tuning
+- but the outputs are still not production-grade
 
 
 Anyone reading this project should understand it as:
