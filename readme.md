@@ -1,5 +1,7 @@
 # Personal C++ Code Generator - README Version 2
 
+![App Screenshot](image.png)
+
 ## Project Overview
 
 This project is a personal **C++ code generation system** built from scratch using a custom tokenizer, a custom **decoder-only Transformer**, a base training pipeline for next-token prediction, and a later **fine-tuning pipeline** for instruction-style C++ responses.
