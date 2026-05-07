@@ -640,6 +640,9 @@ This result shows:
 - the model can produce a plausible completion
 - but it is still weak at exact code completion and may repeat or improvise
 
+# Screen Shot
+![alt text](image.png)
+
 ### Accuracy And Evaluation Note
 
 This project does **not** currently have a single reliable “accuracy” percentage in the way a classifier would.
